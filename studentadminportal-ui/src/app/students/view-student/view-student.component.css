@@ -2,5 +2,12 @@
     padding: 1em 0;
 }
 .container {
-    background-color: brown;
+    background-color: rgb(172, 172, 172);
+    padding-left: 2em;
 }
+.mat-form-field{
+    width: 100%;
+}
+/* .page-header {
+    padding-left: 2em;
+} */
