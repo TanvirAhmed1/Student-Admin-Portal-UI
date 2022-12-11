@@ -7,7 +7,7 @@ import { Gender } from '../models/api-models/gender.model';
   providedIn: 'root'
 })
 export class GenderService {
-  private baseApiUrl = 'https://localhost:44374';
+  private baseApiUrl = 'https://localhost:5001';
   constructor(private httpClient: HttpClient) { }
   getGenderList(): Observable<Gender[]>{
     return this.httpClient.get<Gender[]>(this.baseApiUrl + '/genders');
