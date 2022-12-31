@@ -34,6 +34,7 @@ export class ViewStudentComponent implements OnInit {
   }
   isNewStudent = true;
   header = '';
+  displayProfileImageUrl = '';
   genderList: Gender[] = [];
   constructor(private readonly studentService: StudentService,
     private readonly route: ActivatedRoute,
@@ -49,6 +50,7 @@ export class ViewStudentComponent implements OnInit {
           if(this.studentId.toLocaleLowerCase() === "Add".toLocaleLowerCase()){
             this.isNewStudent = true;
             this.header = 'Add New Student';
+            this.setImage();
           }else{
             this.isNewStudent = false;
             this.header = 'Edit Student';
@@ -56,6 +58,10 @@ export class ViewStudentComponent implements OnInit {
             .subscribe(
             (successResponse) => {
               this.student = successResponse;
+              this.setImage();
+            },
+            (errorResponse)=>{
+              this.setImage();
             }
           );
           }
@@ -117,6 +123,29 @@ export class ViewStudentComponent implements OnInit {
 
       }
     )
+  }
+  uploadImage(event: any): void {
+    if(this.studentId){
+      const file: File = event.target.files[0];
+      this.studentService.uploadImage(this.student.id, file)
+      .subscribe(
+        (successResponse) => {
+          this.student.profileImageUrl = successResponse;
+          this.setImage();
+          this.snackbar.open('Profile Image is Updated', undefined, {
+            duration: 2000
+          })
+        },
+        (errorResponse) => {}
+      )
+    }
+  }
+  private setImage(): void{
+    if(this.student.profileImageUrl){
+
+    }else{
+      this.displayProfileImageUrl = '/assets/default-profile.png';
+    }
   }
 
 }
